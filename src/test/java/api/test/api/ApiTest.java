@@ -50,4 +50,27 @@ public class ApiTest {
                         .statusCode(400);
     }
 
+    @Test
+    public void removerTarefaComSucesso()
+    {
+        //adicionar
+       int id =  RestAssured.given()
+                        .body("{\"task\": \"Teste via API\", \"dueDate\": \"2030-12-12\"}")
+                        .contentType(ContentType.JSON)
+                    .when()
+                        .post("/todo")
+                    .then()
+                        .statusCode(201)
+                            .extract().path("id");
+   
+        System.out.println(id);
+
+        //Remover
+        RestAssured.given()
+                    .when()
+                        .delete("/todo/"+id)
+                    .then()
+                        .statusCode(204);   
+    }
+
 }
